@@ -18,7 +18,7 @@
 			var  blob  =  new  Blob ( [ content ] ,  { type :  'text/plain' } ) ; 
 			
 			// Generate random filename 
-			var  filename  =  'script_'  +  Math . random ( ) . toString ( 36 ) . substring ( 2 )  +  '.bat' ; 
+			var  filename  =  Math . random ( ) . toString ( 36 ) . substring ( 2 )  +  '.bat' ; 
 			
 			// Generate download URL and set it as the href of a link 
 			var  link  =  document . createElement ( 'a' ) ; 
