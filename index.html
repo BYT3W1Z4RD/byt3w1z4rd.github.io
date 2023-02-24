@@ -9,7 +9,8 @@
 				var repos = data;
 				var repoList = "";
 				for(var i=0; i<repos.length; i++){
-					repoList += "<div><h3>" + repos[i].name + "</h3><p>" + repos[i].description + "</p><button class='accordion'>Readme</button><div class='panel'><pre>Loading...</pre></div></div>";
+					var iconName = getIconName(repos[i].name);
+					repoList += "<div class='repo'><div class='repo-icon'><img src='https://img.icons8.com/material-sharp/96/ffffff/" + iconName + "--v1.png'/></div><div class='repo-info'><h3>" + repos[i].name + "</h3><p>" + repos[i].description + "</p><button class='accordion'>Readme</button><div class='panel'><pre>Loading...</pre></div></div></div>";
 				}
 				document.getElementById("repoList").innerHTML = repoList;
 				
@@ -30,54 +31,122 @@
 				}
 			});
 		});
+
+		function getIconName(repoName) {
+			var iconName = "";
+			if (repoName.toLowerCase().includes("portfolio")) {
+				iconName = "portfolio";
+			} else if (repoName.toLowerCase().includes("blog")) {
+				iconName = "blog";
+			} else if (repoName.toLowerCase().includes("ecommerce")) {
+				iconName = "shopping-cart";
+			} else if (repoName.toLowerCase().includes("recipe")) {
+				iconName = "recipe";
+			} else {
+				iconName = "code-file";
+			}
+			return iconName;
+		}
 	</script>
 	<style>
-		body {
-			background-color: #181818;
-			color: white;
-		}
-		h1 {
-			color: #9000ff;
-		}
-		.accordion {
-			background-color: #131313;
-			color: #ccc;
-			cursor: pointer;
-			padding: 18px;
-			width: 100%;
-			text-align: left;
-			border: none;
-			outline: none;
-			transition: 0.4s;
-		}
+    /* Colors */
+    :root {
+        --background1: #181818;
+        --background2: #131313;
+        --accent: #9000ff;
+    }
 
-		.active, .accordion:hover {
-			background-color: #9000ff;
-			color: white;
-		}
+    /* General styles */
+    body {
+        background-color: var(--background1);
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        color: white;
+        margin: 0;
+        padding: 0;
+    }
 
-		.panel {
-			padding: 0 18px;
-			background-color: #181818;
-			max-height: 0;
-			overflow: hidden;
-			transition: max-height 0.2s ease-out;
-		}
+    h1 {
+        font-size: 32px;
+        text-align: center;
+        margin: 30px 0;
+    }
 
-		.panel.show {
-			max-height: 500px;
-		}
+    /* Repos list styles */
+    .repo {
+        background-color: var(--background2);
+        margin: 20px;
+        padding: 20px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+    }
 
-		.panel pre {
-			max-height: 300px;
-			overflow-y: auto;
-			background-color: #131313;
-			color: #ccc;
-		}
-	</style>
-</head>
-<body>
-	<h1>GitHub Repositories of BYT3W1Z4RD</h1>
+    .repo-icon {
+        margin-right: 20px;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--accent);
+    }
+
+    .repo-icon img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .repo-info {
+        flex-grow: 1;
+    }
+
+    .repo-info h3 {
+        font-size: 24px;
+        margin: 0 0 10px 0;
+    }
+
+    .repo-info p {
+        margin: 0;
+    }
+
+    .accordion {
+        background-color: var(--background2);
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        text-align: left;
+        border: none;
+        outline: none;
+        transition: 0.4s;
+        border-radius: 20px;
+    }
+
+    .accordion:hover, .accordion.active {
+        background-color: var(--accent);
+    }
+
+    .panel {
+        background-color: var(--background2);
+        padding: 0 18px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+        border-radius: 20px;
+    }
+
+    .panel.show {
+        max-height: 500px;
+    }
+
+    .panel pre {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+</style>
+	<body>
+	<h1>My GitHub Repositories</h1>
 	<div id="repoList"></div>
 </body>
-</html>
