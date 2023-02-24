@@ -32,9 +32,16 @@
 		});
 	</script>
 	<style>
+		body {
+			background-color: #181818;
+			color: white;
+		}
+		h1 {
+			color: #9000ff;
+		}
 		.accordion {
-			background-color: #eee;
-			color: #444;
+			background-color: #131313;
+			color: #ccc;
 			cursor: pointer;
 			padding: 18px;
 			width: 100%;
@@ -45,12 +52,13 @@
 		}
 
 		.active, .accordion:hover {
-			background-color: #ccc;
+			background-color: #9000ff;
+			color: white;
 		}
 
 		.panel {
 			padding: 0 18px;
-			background-color: white;
+			background-color: #181818;
 			max-height: 0;
 			overflow: hidden;
 			transition: max-height 0.2s ease-out;
@@ -63,6 +71,8 @@
 		.panel pre {
 			max-height: 300px;
 			overflow-y: auto;
+			background-color: #131313;
+			color: #ccc;
 		}
 	</style>
 </head>
