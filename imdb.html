@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>IMDb Movie API</title>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			var urlParams = new URLSearchParams(window.location.search);
+			var media = urlParams.get('media');
+			if(media){
+				$.ajax({
+					url: "http://www.omdbapi.com/",
+					data: {t: media, apikey: "YOUR_API_KEY_HERE"},
+					dataType: "json",
+					success: function(result){
+						result["key"] = "imdb-movie-data";
+						var jsonResult = JSON.stringify(result);
+						document.write(jsonResult);
+					}
+				});
+			} else {
+				document.write("Please provide a media name in the query string.");
+			}
+		});
+	</script>
+</head>
+<body>
+</body>
+</html>
