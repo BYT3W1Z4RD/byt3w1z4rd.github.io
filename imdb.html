@@ -1,29 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Nebula Movie API</title>
+	<title>Nebula Media API</title>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script>
 		$(document).ready(function(){
-			var urlParams = new URLSearchParams(window.location.search);
-			var media = urlParams.get('media');
-			if(media){
+			$("#btnSearch").click(function(){
+				var movie = $("#txtSearch").val();
 				$.ajax({
-					url: "http://www.omdbapi.com/",
-					data: {t: media, apikey: "YOUR_API_KEY_HERE"},
+					url: "https://www.omdbapi.com/",
+					data: {t: movie, apikey: "67614538"},
 					dataType: "json",
 					success: function(result){
-						result["key"] = "imdb-movie-data";
 						var jsonResult = JSON.stringify(result);
-						document.write(jsonResult);
+						$("#movieInfo").text(jsonResult);
 					}
 				});
-			} else {
-				document.write("Please provide a media name in the query string.");
-			}
+			});
 		});
 	</script>
 </head>
 <body>
+	<h1>Nebula Media API</h1>
+	<p>Enter the name of a movie or TV show to retrieve information:</p>
+	<input type="text" id="txtSearch">
+	<button id="btnSearch">Search</button>
+	<hr>
+	<h2>Movie/TV Show Information</h2>
+	<pre id="movieInfo"></pre>
 </body>
 </html>
