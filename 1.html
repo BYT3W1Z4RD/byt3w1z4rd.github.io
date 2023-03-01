@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>OMDb Movie/TV API</title>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+$(document).ready(function(){
+var urlParams = new URLSearchParams(window.location.search);
+var media = urlParams.get('media');
+if(media){
+$.ajax({
+url: "https://www.omdbapi.com/",
+data: {t: media, apikey: "67614538"},
+dataType: "json",
+success: function(result){
+var jsonResult = JSON.stringify(result);
+document.write(jsonResult);
+}
+});
+} else {
+document.write("Please provide a media name in the query string.");
+}
+});
+</script>
+</head>
+<body>
+</body>
+</html>
+
+<button id="btnSearch">Search</button>
+<hr>
+<h2>Movie/TV Show Information</h2>
+<pre id="movieInfo"></pre>
+</body>         -
