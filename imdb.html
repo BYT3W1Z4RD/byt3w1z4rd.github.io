@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>OMDb Movie/TV API</title>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$("#btnSearch").click(function(){
+				var movie = $("#txtSearch").val();
+				$.ajax({
+					url: "https://www.omdbapi.com/",
+					data: {t: movie, apikey: "67614538"},
+					dataType: "json",
+					success: function(result){
+						var jsonResult = JSON.stringify(result);
+						$("#movieInfo").text(jsonResult);
+					}
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+	<h1>OMDb Movie/TV API</h1>
+	<p>Enter the name of a movie or TV show to retrieve information:</p>
+	<input type="text" id="txtSearch">
+	<button id="btnSearch">Search</button>
+	<hr>
+	<h2>Movie/TV Show Information</h2>
+	<pre id="movieInfo"></pre>
+</body>
+</html>
+  }
+      input[type="submit"] {
+        border: none;
+        border-radius: 30px;
+        padding: 10px;
+        background-color: transparent;
+        color: #fff;
+        font-size: 1.1em;
+        cursor: pointer;
+        box-shadow: 0 0 10px #ff00ff;
+        width: 250px;
+        margin: 0 auto;
+      }
+      input[type="submit"]:hover {
+        background-color: transparent;
+        color: #ff00ff;
+        box-shadow: 0 0 20px #ff00ff;
+      }
+      input[type="text"]:focus,
+      input[type="password"]:focus {
+        outline: none;
+        box-shadow: 0 0 20px #00ffff;
+        animation: glow 1s ease-in-out infinite alternate;
+      }
+      @keyframes glow {
+        from {
+          box-shadow: 0 0 20px #00ffff;
+        }
+        to {
+          box-shadow: 0 0 30px #00ffff, 0 0 40px #00ffff, 0 0 50px #00ffff, 0 0 60px #00ffff;
+        }
+      }
+      .login-box {
+        border: 2px solid #ff00ff;
+        border-radius: 30px;
+        padding: 20px;
+        margin: 0 auto;
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-box">
+      <h1>Login</h1>
+      <form>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" placeholder="Enter username" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Enter password" required>
+        <br>
+        <input type="submit" value="Login">
+      </form>
+    </div>
+  </body>
+</html>
