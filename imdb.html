@@ -1,32 +1,111 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Nebula Media API</title>
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-	<script>
-		$(document).ready(function(){
-			$("#btnSearch").click(function(){
-				var movie = $("#txtSearch").val();
-				$.ajax({
-					url: "https://www.omdbapi.com/",
-					data: {t: movie, apikey: "67614538"},
-					dataType: "json",
-					success: function(result){
-						var jsonResult = JSON.stringify(result);
-						$("#movieInfo").text(jsonResult);
-					}
-				});
-			});
-		});
-	</script>
+    <title>Nebula Media API</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+        }
+        h1, h2 {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        h1 {
+            font-size: 48px;
+            color: #fff;
+            margin-top: 50px;
+        }
+        h2 {
+            font-size: 36px;
+            margin-top: 30px;
+        }
+        p {
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        input[type=text] {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #333;
+            color: #fff;
+            width: 80%;
+            margin: 0 auto;
+            display: block;
+        }
+        button {
+            background-color: #7c00ff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: block;
+            margin: 20px auto;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        hr {
+            border: none;
+            border-bottom: 2px solid #00ffff;
+            margin-top: 50px;
+        }
+        pre {
+            padding: 20px;
+            background-color: #333;
+            border: 2px solid #00ffff;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+        }
+    </style>
+    <script>
+        function searchMovie(movie) {
+            $.ajax({
+                url: "https://www.omdbapi.com/",
+                data: {t: movie, apikey: "67614538"},
+                dataType: "json",
+                success: function(result){
+                    var posterUrl = result.Poster;
+                    delete result.Poster;  // remove the poster value from the result object
+
+                    var jsonResult = JSON.stringify(result, null, 2);  // prettify the JSON result
+                    var htmlResult = `<pre>${jsonResult}</pre>`;
+                    if (posterUrl !== "N/A") {  // display poster only if it's available
+                        htmlResult += `<img src="${posterUrl}">`;
+                    }
+                    $("#movieInfo").html(htmlResult);
+                }
+            });
+        }
+
+        $(document).ready(function(){
+            var query = window.location.search.substring(1);
+            if (query !== "") {  // if there's a query parameter, search for the movie and display the result
+                var movie = query.split("=")[1];
+                searchMovie(movie);
+            }
+
+            $("#btnSearch").click(function(){
+                var movie = $("#txtSearch").val();
+                searchMovie(movie);
+            });
+        });
+    </script>
 </head>
 <body>
-	<h1>Nebula Media API</h1>
-	<p>Enter the name of a movie or TV show to retrieve information:</p>
-	<input type="text" id="txtSearch">
-	<button id="btnSearch">Search</button>
-	<hr>
-	<h2>Movie/TV Show Information</h2>
-	<pre id="movieInfo"></pre>
+    <h1>Nebula Media API</h1>
+    <p>Search Name Of Movie Or Series:</p>
+    <input type="text" id="txtSearch">
+    <button id="btnSearch">Search</button>
+    <hr>
+    <h2>Movie/TV Show Information</h2>
+    <pre id="movieInfo"></pre>
+    <img id="poster">
 </body>
 </html>
