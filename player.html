@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>2Embed Player</title>
+    <title>Nebula Media Player</title>
     <style>
       body {
         margin: 0;
@@ -21,14 +21,9 @@
   <body>
     <iframe id="player" frameborder="0" allowfullscreen></iframe>
     <script>
-      // Get the IMDb ID from the query string
       const urlParams = new URLSearchParams(window.location.search);
       const imdbID = urlParams.get('media');
-
-      // Build the URL of the embedded player with the IMDb ID
       const playerURL = `https://www.2embed.to/embed/imdb/movie?id=${imdbID}`;
-
-      // Set the src attribute of the player iframe to the player URL
       const player = document.getElementById('player');
       player.src = playerURL;
     </script>
