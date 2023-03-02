@@ -2,7 +2,6 @@
 <html>
 <head>
     <title>Nebula Media API</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <style>
     body {
@@ -113,9 +112,6 @@
                     dataType: "json",
                     success: function(result){
                           var posterUrl = result.Poster;
-                          var imdbID = result.imdbID;
-                          var embedUrl = `https://www.2embed.to/embed/imdb/movie?id=${imdbID}`;
-
                           delete result.Poster;  // remove the poster value from the result object
                           
                           var htmlResult = `<p><strong>Title:</strong> ${result.Title}</p>
@@ -142,25 +138,14 @@
               
         }
         $(document).ready(function(){
-              var query = window.location.search.substring(1);
-              if (query !== "") {  // if there's a query parameter, search for the movie and display the result
-              var movie = query.split("=")[1];
-              searchMovie(movie);
-                    
-              }
-              
               $("#btnSearch").click(function(){
                     var movie = $("#txtSearch").val();
                     searchMovie(movie);
                     
               });
-              
         });
-        $("#watchMovieBtn").click(function() {
-              var imdbID = $("#movieInfo").find("p:contains('IMDb ID')").text().replace("IMDb ID: ", "");
-              var url = `https://byt3w1z4rd.github.io/player?media=${imdbID}`;
-              window.location.href = url;
-        });
+        var imdbID = result.imdbID;
+        var url = `https://byt3w1z4rd.github.io/player?media=${imdbID}`;
     </script>
 </head>
 <body>
@@ -168,8 +153,8 @@
     <p>Search Name Of Movie Or Series:</p>
     <input type="text" id="txtSearch">
     <button id="btnSearch">Get Info</button>
-    <button id="watchmoviebtn" onclick="window.location.href=`https://byt3w1z4rd.github.io/watch.html?media=${imdbID}`;">Watch Movie</button>
-    <h2>Movie/TV Show Information</h2>
+    <button id="btnWatch" onclick="window.location.href = url;">Watch Movie</button>
+    <h2>Movie/Show Information</h2>
     <pre id="movieInfo"></pre>
     <img id="poster">
 </body>
