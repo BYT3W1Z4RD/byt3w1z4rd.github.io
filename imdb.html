@@ -129,19 +129,18 @@
                           <p><strong>Awards:</strong> ${result.Awards}</p>`;
                           if (posterUrl !== "N/A") {  // display poster only if it's available
                           htmlResult += `<img src="${posterUrl}">`;
-                                
                           }
                           $("#movieInfo").html(htmlResult);
-                    }
-                    
+                          
+                          var imdbID = result.imdbID;
+                          var url = `https://byt3w1z4rd.github.io/player?media=${imdbID}`;
+                          }
               });
-              
         }
         $(document).ready(function(){
               $("#btnSearch").click(function(){
                     var movie = $("#txtSearch").val();
                     searchMovie(movie);
-                    
               });
         });
         var imdbID = result.imdbID;
