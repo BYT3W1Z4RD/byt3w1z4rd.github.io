@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nebula Media API</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<style>
+    body {
+        background-color: #1a1a1a;
+        color: #00ffff;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+    }
+    
+    h1, h2, h3{
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+    
+    h1 {
+        font-size: 48px;
+        color: #00ffff;
+        margin-top: 50px;
+        text-shadow: 0px 0px 10px #00ffff;
+    }
+    
+    h2 {
+        font-size: 36px;
+        margin-top: 30px;
+        text-shadow: 0px 0px 10px #00ffff;
+    }
+    
+    h3 {
+        font-size: 25px;
+        margin-top: 30px;
+        text-shadow: 0px 0px 5px #00ffff;
+    }
+    
+    p {
+        text-shadow: 0px 0px 0px #00ffff;
+    }
+    
+    input[type=text] {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #00ffff;
+        background-color: #333;
+        color: #fff;
+        width: 70%;
+        font-size: 18px;
+        margin: 0 auto;
+        display: block;
+        box-shadow: 0px 0px 0px #00ffff;
+        outline: none;
+        transition: box-shadow 0.3s ease-in-out;
+    }
+    
+    input[type=text]:focus {
+        border: 2px solid #00ffff;
+        box-shadow: 0px 0px 30px #00ffff;
+    }
+    
+    button {
+        background-color: transparent;
+        color: #00ffff;
+        border: 1px solid #00ffff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        display: block;
+        margin: 20px auto;
+        font-size: 18px;
+        cursor: pointer;
+        text-shadow: 0px 0px 5px #00ffff;
+        transition: box-shadow 0.3s ease-in-out;
+    }
+    
+    button:hover, button:focus {
+          border: 2px solid #00ffff;
+        box-shadow: 0px 0px 28px #00ffff;
+    }
+    
+    hr {
+        border: none;
+        border-bottom: 2px solid #00ffff;
+        margin-top: 50px;
+    }
+    
+    pre {
+        padding: 0px;
+        background-color: #333;
+        border: 2px solid #00ffff;
+        border-radius: 5px;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+        text-shadow: 0px 0px 5px #00ffff;
+    }
+    
+    #movieInfo {
+        border: 2px solid #00ffff;
+        border-radius: 5px;
+        padding: 10px;
+        margin-top: 20px;
+        text-shadow: 0px 0px 0px #00ffff;
+        box-shadow: 0px 0px 15px #00ffff;
+    }
+    
+    #poster {
+        border: 2px solid #00ffff;
+        border-radius: 5px;
+        margin-top: 20px;
+        box-shadow: 0px 0px 0px #00ffff;
+    }
+</style>
+<script>
+        function searchMovie(movie) {
+              $.ajax({
+                    url: "https://www.omdbapi.com/",
+                    data: {t: movie, apikey: "67614538"},
+                    dataType: "json",
+                    success: function(result){
+                          var posterUrl = result.Poster;
+                          delete result.Poster;
+                          
+                          var htmlResult = `
+                          <br><strong>Title:</strong> ${result.Title}
+                          <br><strong>Rated:</strong> ${result.imdbRating + "/10"}
+                          <br><strong>Year:</strong. ${result.Year}
+                          <br><strong>Age Rating:</strong> ${result.Rated}
+                          <br><strong>Runtime:</strong> ${result.Runtime}
+                          <br><strong>Genre:</strong> ${result.Genre}
+                          <br><strong>Director:</strong> ${result.Director}
+                          <br><strong>Writer:</strong> ${result.Writer}
+                          <br><strong>Actors:</strong> ${result.Actors}
+                          <br><strong>Awards:</strong> ${result.Awards}
+                          <br><strong>Plot:</strong> ${result.Plot}
+                          `;
+
+                          if (posterUrl !== "N/A") {
+                                htmlResult += `<img src="${posterUrl}">`;
+                          }
+                          $("#movieInfo").html(htmlResult);
+                          $("#btnWatch").click(function() {
+                                var url = `https://byt3w1z4rd.github.io/player?media=${result.imdbID}`;
+                                window.location.href = url;
+                          });
+                    },
+              });
+        }
+        $(document).ready(function(){
+              $("#btnSearch").click(function(){
+                    var movie = $("#txtSearch").val();
+                    searchMovie(movie);
+              });
+        });
+    </script>
+</head>
+<body>
+    <h1>Nebula Media API</h1>
+    <h3>Search Movie Or Series:</h3>
+    <input type="text" id="txtSearch">
+    <button id="btnSearch">Get Info</button>
+    <button id="btnWatch" onclick="window.location.href = url;">Watch Movie</button>
+    <h2>Movie/Show Information</h2>
+    <pre id="movieInfo"></pre>
+    <img id="poster">
+</body>
+</html>
+    
