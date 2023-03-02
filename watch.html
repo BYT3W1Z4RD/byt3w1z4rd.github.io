@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>2Embed Player</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      #player {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <iframe id="player" frameborder="0" allowfullscreen></iframe>
+    <script>
+      // Get the IMDb ID from the query string
+      const urlParams = new URLSearchParams(window.location.search);
+      const imdbID = urlParams.get('media');
+
+      // Build the URL of the embedded player with the IMDb ID
+      const playerURL = `https://www.2embed.to/embed/imdb/movie?id=${imdbID}`;
+
+      // Set the src attribute of the player iframe to the player URL
+      const player = document.getElementById('player');
+      player.src = playerURL;
+    </script>
+  </body>
+</html>
