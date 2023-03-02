@@ -134,10 +134,11 @@
                           <p><strong>Plot:</strong> ${result.Plot}</p>
                           <p><strong>Language:</strong> ${result.Language}</p>
                           <p><strong>Country:</strong> ${result.Country}</p>
-                          <p><strong>Awards:</strong> ${result.Awards}</p>
-                          <p><strong>Watch:</strong> <button id="btnWatch">Watch Now</button></p>`;
+                          <p><strong>Awards:</strong> ${result.Awards}</p>`;
+                          if (posterUrl !== "N/A") {
+                                htmlResult += `<img src="${posterUrl}">`;
+                          }
                           $("#movieInfo").html(htmlResult);
-                          $("#poster").attr("src", posterUrl);
                           $("#btnWatch").click(function() {
                                 var url = `https://byt3w1z4rd.github.io/player?media=${result.imdbID}`;
                                 window.location.href = url;
