@@ -146,11 +146,8 @@
                                 if(result.Type === 'movie') {
                                       url = `https://byt3w1z4rd.github.io/player?movie=${result.imdbID}`;
                                       
-                                } else if(result.Type === 'series') {
+                                } else(result.Type === 'series') {
                                       url = `https://byt3w1z4rd.github.io/player?show=${result.imdbID}`;
-                                      
-                                } else {
-                                      url = 'https://byt3w1z4rd.github.io/player';
                                       
                                 }
                                 window.location.href = url;
