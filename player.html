@@ -9,187 +9,36 @@
         overflow: hidden;
       }
 
-      #player-wrapper {
-        position: relative;
-        height: 100vh;
-        width: 100%;
-      }
-
       #player {
+        width: 100%;
+        height: 100%;
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
-        border: none;
-      }
-
-      #episode-selector {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 50px;
-        background-color: #111;
-        color: #fff;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 20px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-      }
-
-      #season-selector {
-        display: inline-block;
-        margin-right: 20px;
-      }
-
-      #season-selector select {
-        background-color: #333;
-        color: #fff;
-        border: none;
-        padding: 8px;
-        font-size: 16px;
-        border-radius: 4px;
-        appearance: none;
-      }
-
-      #episode-selector select {
-        background-color: #333;
-        color: #fff;
-        border: none;
-        padding: 8px;
-        font-size: 16px;
-        border-radius: 4px;
-        appearance: none;
-      }
-
-      #episode-selector button {
-        background-color: #333;
-        color: #fff;
-        border: none;
-        padding: 8px;
-        font-size: 16px;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.2s;
-      }
-
-      #episode-selector button:hover {
-        background-color: #555;
       }
     </style>
   </head>
   <body>
-    <div id="episode-selector">
-      <div id="season-selector">
-        <label for="season-select">Season:</label>
-        <select id="season-select"></select>
-      </div>
-      <div id="episode-list">
-        <label for="episode-select">Episode:</label>
-        <select id="episode-select"></select>
-        <button id="play-button">Play</button>
-      </div>
-    </div>
-    <div id="player-wrapper">
-      <iframe id="player" frameborder="0" allowfullscreen></iframe>
-    </div>
-<script>
-  function createPlayerURL() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const movieID = urlParams.get('movie');
-    const showID = urlParams.get('show');
-    const season = urlParams.get('season');
-    const episode = urlParams.get('episode');
-    let playerURL = '';
-    if (showID) {
-      playerURL = `https://www.2embed.to/embed/imdb/tv?id=${showID}&s=${season}&e=${episode}`;
-    } else {
-      playerURL = `https://www.2embed.to/embed/imdb/movie?id=${movieID}`;
-    }
-    return playerURL;
-  }
-
-  const playerURL = createPlayerURL();
-  const player = document.getElementById('player');
-  player.src = playerURL;
-  console.log(playerURL)
-  const showID = new URLSearchParams(window.location.search).get('show');
-  if (showID) {
-    const seasonSelect = document.createElement('select');
-    const episodeSelect = document.createElement('select');
-    const bar = document.createElement('div');
-    bar.style.backgroundColor = 'black';
-    bar.style.color = 'white';
-    bar.style.width = '100%';
-    bar.style.height = '50px';
-    bar.style.display = 'flex';
-    bar.style.flexDirection = 'row';
-    bar.style.alignItems = 'center';
-    bar.style.position = 'fixed';
-    bar.style.top = '0';
-    bar.style.left = '0';
-    bar.style.zIndex = '1000';
-
-    const seasonLabel = document.createElement('label');
-    seasonLabel.for = 'season-select';
-    seasonLabel.innerText = 'Season:';
-    seasonLabel.style.marginRight = '10px';
-
-    const episodeLabel = document.createElement('label');
-    episodeLabel.for = 'episode-select';
-    episodeLabel.innerText = 'Episode:';
-    episodeLabel.style.marginRight = '10px';
-
-    seasonSelect.id = 'season-select';
-    episodeSelect.id = 'episode-select';
-
-    bar.appendChild(seasonLabel);
-    bar.appendChild(seasonSelect);
-    bar.appendChild(episodeLabel);
-    bar.appendChild(episodeSelect);
-    document.body.insertBefore(bar, player);
-
-    fetch(`https://www.omdbapi.com/?i=${showID}&apikey=67614538&type=series`)
-      .then(response => response.json())
-      .then(data => {
-        const totalSeasons = parseInt(data.totalSeasons);
-
-        for (let i = 1; i <= totalSeasons; i++) {
-          const option = document.createElement('option');
-          option.value = i;
-          option.text = `Season ${i}`;
-          if (i == season) {
-            option.selected = true;
-          }
-          seasonSelect.appendChild(option);
+    <iframe id="player" frameborder="0" allowfullscreen></iframe>
+    <script>
+      function createPlayerURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const movieID = urlParams.get('movie');
+        const showID = urlParams.get('show');
+        const season = urlParams.get('season');
+        const episode = urlParams.get('episode');
+        let playerURL = '';
+        if (movieID) {
+              playerURL = `https://www.2embed.to/embed/imdb/movie?id=${movieID}`;
         }
-
-        for (let i = 1; i <= 24; i++) {
-          const option = document.createElement('option');
-          option.value = i;
-          option.text = `Episode ${i}`;
-          if (i == episode) {
-            option.selected = true;
-          }
-          episodeSelect.appendChild(option);
+        else {
+              playerURL = `https://www.2embed.to/embed/imdb/tv?id=${showID}&s=${season}&e=${episode}`;
         }
-
-        seasonSelect.addEventListener('change', () => {
-          const selectedSeason = seasonSelect.value;
-          window.location.search = `?show=${showID}&season=${selectedSeason}&episode=1`;
-        });
-
-        episodeSelect.addEventListener('change', () => {
-          const selectedEpisode = episodeSelect.value;
-          window.location.search = `?show=${showID}&season=${season}&episode=${selectedEpisode}`;
-        });
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }
-</script>
+        return playerURL;
+      }
+      const playerURL = createPlayerURL();
+      const player = document.getElementById('player');
+      player.src = playerURL;
+    </script>
   </body>
 </html>
