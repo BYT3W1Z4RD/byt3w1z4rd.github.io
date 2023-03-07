@@ -144,13 +144,13 @@
                           $("#btnWatch").click(function() {  
                                 var url;
                                 if(result.Type === 'movie') {
-                                      url = `https://byt3w1z4rd.github.io/player?type=movie&?id=${result.imdbID}`;
+                                      url = `https://byt3w1z4rd.github.io/player?movie=${result.imdbID}`;
                                       
                                 } else if(result.Type === 'series') {
-                                      url = `https://byt3w1z4rd.github.io/player?type=show&?id=${result.imdbID}`;
+                                      url = `https://byt3w1z4rd.github.io/player?show=${result.imdbID}`;
                                       
                                 } else {
-                                      url = 'https://byt3w1z4rd.github.io/player?type=movie&?id=tt0078748';
+                                      url = 'https://byt3w1z4rd.github.io/player?movie=tt0078748';
                                       
                                 }
                                 window.location.href = url;
