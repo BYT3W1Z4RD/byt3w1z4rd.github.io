@@ -151,7 +151,7 @@
     bar.appendChild(episodeSelect);
     document.body.insertBefore(bar, player);
 
-    fetch(`https://www.omdbapi.com/?i=${showID}&apikey=[API_KEY]&type=series`)
+    fetch(`https://www.omdbapi.com/?i=${showID}&apikey=67614538&type=series`)
       .then(response => response.json())
       .then(data => {
         const totalSeasons = parseInt(data.totalSeasons);
