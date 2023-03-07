@@ -25,8 +25,10 @@
         const urlParams = new URLSearchParams(window.location.search);
         const mediaType = urlParams.get('type');
         const mediaID = urlParams.get('id');
+        console.log(mediaType);
+        console.log(mediaID);
         let playerURL = '';
-        if (mediaType === 'movie') {
+        if (mediaType === 'movie' && mediaID) {
           playerURL = `https://www.2embed.to/embed/imdb/movie?id=${mediaID}`;
         } else if (mediaType === 'show') {
           const season = urlParams.get('season');
@@ -36,7 +38,7 @@
           }
         }
         if (!playerURL) {
-          playerURL = `https://www.2embed.to/embed/imdb/movie?id=tt0078748`;
+          playerURL = `https://www.2embed.to/embed/imdb/movie?id=tt6806448`;
         }
         return playerURL;
       }
