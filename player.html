@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Nebula Media Player</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      #player {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <iframe id="player" frameborder="0" allowfullscreen></iframe>
+    <script>
+      function createPlayerURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const mediaType = urlParams.get('type');
+        const mediaID = urlParams.get('id');
+        let playerURL;
+        if (mediaType === 'movie') {
+          playerURL = `https://www.2embed.to/embed/imdb/movie?id=${mediaID}`;
+        } else if (mediaType === 'show') {
+          const season = urlParams.get('season');
+          const episode = urlParams.get('episode');
+          if (season && episode) {
+            playerURL = `https://www.2embed.to/embed/imdb/tv?id=${mediaID}&s=${season}&e=${episode}`;
+          } else {
+            playerURL = `https://www.2embed.to/embed/imdb/movie?id=tt6806448`;
+          }
+        }
+        return playerURL;
+      }
+
+      const playerURL = createPlayerURL();
+      const player = document.getElementById('player');
+      player.src = playerURL;
+    </script>
+  </body>
+</html>
