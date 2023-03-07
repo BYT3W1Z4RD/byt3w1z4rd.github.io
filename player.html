@@ -23,9 +23,18 @@
     <script>
       function createPlayerURL() {
         const urlParams = new URLSearchParams(window.location.search);
-        const imdbID = urlParams.get('movie');
+        const movieID = urlParams.get('movie');
+        const showID = urlParams.get('show');
+        const season = urlParams.get('season');
+        const episode = urlParams.get('episode');
         let playerURL = '';
-        playerURL = `https://www.2embed.to/embed/imdb/movie?id=${imdbID}`;
+        if (showID) {
+              playerURL = `https://www.2embed.to/embed/imdb/movie?id=${imdbID}&s=${season}&e=${episode}`;
+        }
+        else {
+              playerURL = `https://www.2embed.to/embed/imdb/movie?id=${movieID}`;
+        }
+        console.log(playerURL)
         return playerURL;
       }
       const playerURL = createPlayerURL();
