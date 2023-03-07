@@ -25,14 +25,9 @@
         const urlParams = new URLSearchParams(window.location.search);
         const imdbID = urlParams.get('movie');
         let playerURL = '';
-        if (imdbID) {
-          playerURL = `https://www.2embed.to/embed/imdb/movie?id=${imdbID}`;
-        } else {
-          playerURL = 'https://www.2embed.to/embed/imdb/movie?id=tt6806448';
-        }
+        playerURL = `https://www.2embed.to/embed/imdb/movie?id=${imdbID}`;
         return playerURL;
       }
-
       const playerURL = createPlayerURL();
       const player = document.getElementById('player');
       player.src = playerURL;
