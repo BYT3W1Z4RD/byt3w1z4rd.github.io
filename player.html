@@ -21,25 +21,61 @@
   <body>
     <iframe id="player" frameborder="0" allowfullscreen></iframe>
     <script>
-      function createPlayerURL() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const movieID = urlParams.get('movie');
-        const showID = urlParams.get('show');
-        const season = urlParams.get('season');
-        const episode = urlParams.get('episode');
-        let playerURL = '';
-        if (showID) {
-              playerURL = `https://www.2embed.to/embed/imdb/tv?id=${showID}&s=${season}&e=${episode}`;
-        }
-        else {
-              playerURL = `https://www.2embed.to/embed/imdb/movie?id=${movieID}`;
-        }
-        console.log(playerURL)
-        return playerURL;
-      }
-      const playerURL = createPlayerURL();
-      const player = document.getElementById('player');
-      player.src = playerURL;
+    function createPlayerURL() {
+          const urlParams = new URLSearchParams(window.location.search);
+          const movieID = urlParams.get('movie');
+          const showID = urlParams.get('show');
+          const season = urlParams.get('season');
+          const episode = urlParams.get('episode');
+          let playerURL = '';
+          if (showID) {
+                playerURL = `https://www.2embed.to/embed/imdb/tv?id=${showID}`;
+                const collapsableUI = `
+                <div>
+                <button id="collapsible">Select episode</button>
+                <div class="content">
+                <form>
+                <label for="season">Season:</label>
+                <input type="number" id="season" name="season" min="1">
+                <label for="episode">Episode:</label>
+                <input type="number" id="episode" name="episode" min="1">
+                <input type="button" value="Go" onclick="updatePlayer()">
+                </form>
+                </div>
+                </div>
+                `;
+                const body = document.getElementsByTagName('body')[0];
+                body.insertAdjacentHTML('beforeend', collapsableUI);
+                const coll = document.getElementById("collapsible");
+                coll.addEventListener("click", function() {
+                      this.classList.toggle("active");
+                      const content = this.nextElementSibling;
+                      if (content.style.maxHeight){
+                            content.style.maxHeight = null;
+                      } else {
+                            content.style.maxHeight = content.scrollHeight + "px";
+                      }
+                });
+          }
+          else {
+                playerURL = `https://www.2embed.to/embed/imdb/movie?id=${movieID}`;
+          }
+          if (showID) {
+          playerURL += `&s=${season}&e=${episode}`;
+          }
+          console.log(playerURL)
+          return playerURL;
+    }
+    const playerURL = createPlayerURL();
+    const player = document.getElementById('player');
+    player.src = playerURL;
+    
+    function updatePlayer() {
+          const season = document.getElementById("season").value;
+          const episode = document.getElementById("episode").value;
+          const player = document.getElementById("player");
+          player.src = createPlayerURL();
+    }
     </script>
   </body>
 </html>
