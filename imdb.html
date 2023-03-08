@@ -129,7 +129,7 @@
         function searchMovie(movie) {
               $.ajax({
                     url: "https://www.omdbapi.com/",
-                    data: {t: movie, apikey: `67614538`},
+                    data: {t: movie, apikey: "67614538"},
                     dataType: "json",
                     success: function(result){
                           var posterUrl = result.Poster;
@@ -151,13 +151,13 @@
                           $("#btnWatch").click(function() {  
                                 var url;
                                 if(result.Type === 'movie') {
-                                      url = `./player.html?mi=${result.imdbID}`;
+                                      url = `./player?mi=${result.imdbID}`;
                                       
                                 } else if(result.Type === 'series') {
-                                      url = `./player.html?si=${result.imdbID}&?season=1&?episode=1`;
+                                      url = `./player?si=${result.imdbID}&?season=1&?episode=1`;
                                       
                                 } else {
-                                      url = `./player.html?si=tt0078748&?season=1&?episode=1`;
+                                      url = './player?si=tt0078748&?season=1&?episode=1';
                                       
                                 }
                                 window.location.href = url;
@@ -167,7 +167,6 @@
                     },
               });
         }
-        console.log(${{secrets.OKEY}})
         $(document).ready(function(){
               $("#btnSearch").click(function(){
                     var movie = $("#txtSearch").val();
