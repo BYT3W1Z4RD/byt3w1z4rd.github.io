@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Latest Movies</title>
+<style>
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+font-size: 16px;
+color: #fff;
+}
+
+body {
+background-color: #222;
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+padding: 20px;
+}
+
+h1 {
+font-size: 40px;
+font-weight: bold;
+margin-bottom: 20px;
+text-align: center;
+}
+
+.container {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+align-items: center;
+margin: 20px;
+background-color: #333;
+border-radius: 10px;
+padding: 20px;
+box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+width: 100%;
+}
+
+.movie {
+display: flex;
+flex-direction: column;
+align-items: center;
+margin: 10px;
+}
+
+.poster {
+width: 200px;
+height: 300px;
+object-fit: cover;
+margin-bottom: 10px;
+border-radius: 10px;
+box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+}
+
+.title {
+font-size: 24px;
+font-weight: bold;
+text-align: center;
+margin-bottom: 10px;
+}
+
+.year {
+font-size: 18px;
+margin-bottom: 10px;
+}
+
+.rating {
+display: flex;
+align-items: center;
+font-size: 18px;
+margin-bottom: 10px;
+}
+
+.rating span {
+margin-right: 5px;
+}
+
+.star {
+color: orange;
+margin-left: 5px;
+}
+</style>
+</head>
+
+<body>
+      <h1>Latest Movies</h1>
+<div class="container"></div>
+
+<script src="https://kit.fontawesome.com/95028ca83d.js" crossorigin="anonymous"></script>
+<script>
+const container = document.querySelector('.container');
+		fetch('https://api.themoviedb.org/3/movie/now_playing?api_key=0ae47aadd2d85a324c238972cedab662')
+			.then(response => response.json())
+			.then(data => {
+				data.results.forEach(movie => {
+					const movieDiv = document.createElement('div');
+					movieDiv.classList.add('movie');
+
+					const poster = document.createElement('img');
+					poster.classList.add('poster');
+					poster.src = `https://image.tmdb.org/t/p/w200${movie.poster_path}`;
+					poster.alt = `${movie.title} poster`;
+					movieDiv.appendChild(poster);
+
+					const title = document.createElement('div');
+					title.classList.add('title');
+					title.textContent = movie.title;
+					movieDiv.appendChild(title);
+
+					const year = document.createElement('div');
+					year.classList.add('year');
+					year.textContent = movie.release_date.substring(0, 4);
+					movieDiv.appendChild(year);
+
+					const rating = document.createElement('div');
+					rating.classList.add('rating');
+
+					const ratingText = document.createElement('span');
+					ratingText.textContent = movie.vote_average;
+					rating.appendChild(ratingText);
+
+					const star = document.createElement('i');
+					star.classList.add('fas', 'fa-star', 'star');
+					rating.appendChild(star);
+
+					movieDiv.appendChild(rating);
+
+					container.appendChild(movieDiv);
+				});
+			})
+			.catch(error => console.log(error));
+	</script>
+</body>
