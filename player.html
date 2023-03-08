@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <meta property="og:title" content="Nebula Media Player">
-    <meta property="og:description" content="Nebula Is The Biggest Library Of HD Movies and TV Shows Online. 100% Free With No Ads and No Account Signup Required.">
-    <meta property="og:image" content="https://i.imgur.com/kO03yyM_d.webp?maxwidth=760&fidelity=grand">
-    <meta property="og:url" content="https://byt3w1z4rd.github.io/player">
-    <meta property="og:type" content="website">
     <title>Nebula Media Player</title>
-    <link rel="icon" href="https://i.imgur.com/kO03yyM_d.webp?maxwidth=760&fidelity=grand" type="image/png">
     <style>
       body {
         margin: 0;
@@ -29,19 +22,26 @@
     <iframe id="player" frameborder="0" allowfullscreen></iframe>
     <script>
       function createPlayerURL() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const movieID = urlParams.get('movie');
-        const showID = urlParams.get('show');
-        const season = urlParams.get('season');
-        const episode = urlParams.get('episode');
-        let playerURL = '';
-        if (movieID) {
-              playerURL = `https://www.2embed.to/embed/imdb/movie?id=${movieID}`;
-        }
-        else {
-              playerURL = `https://www.2embed.to/embed/imdb/tv?id=${showID}&s=${season}&e=${episode}`;
-        }
-        return playerURL;
+            const urlParams = new URLSearchParams(window.location.search);
+            const mi = urlParams.get('mi');
+            const mt = urlParams.get('mt');
+            const si = urlParams.get('si');
+            const st = urlParams.get('st');
+            const season = urlParams.get('season');
+            const episode = urlParams.get('episode');
+            let playerURL = '';
+            if (mi) {
+                  playerURL = `https://www.2embed.to/embed/imdb/movie?id=${mi}`;
+            } else if (mt) {
+                  playerURL = `https://www.2embed.to/embed/tmdb/movie?id=${mt}`;
+            } else if (si) {
+                  playerURL = `https://www.2embed.to/embed/imdb/tv?id=${si}&s=1&e=1`;
+            } else if (st) {
+                  playerURL = `https://www.2embed.to/embed/tmdb/tv?id=${st}&s=1&e=1`;
+            } else {
+                  playerURL = `https://www.2embed.to/embed/imdb/tv?id=tt0903747&s=1&e=1`;
+            }
+            return playerURL;
       }
       const playerURL = createPlayerURL();
       const player = document.getElementById('player');
