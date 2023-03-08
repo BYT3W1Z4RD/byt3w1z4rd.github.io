@@ -129,7 +129,7 @@
         function searchMovie(movie) {
               $.ajax({
                     url: "https://www.omdbapi.com/",
-                    data: {t: movie, apikey: "67614538"},
+                    data: {t: movie, apikey: ${{secrets.OKEY}}},
                     dataType: "json",
                     success: function(result){
                           var posterUrl = result.Poster;
@@ -167,6 +167,7 @@
                     },
               });
         }
+        console.log(${{secrets.OKEY}})
         $(document).ready(function(){
               $("#btnSearch").click(function(){
                     var movie = $("#txtSearch").val();
