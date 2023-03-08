@@ -129,7 +129,7 @@
         function searchMovie(movie) {
               $.ajax({
                     url: "https://www.omdbapi.com/",
-                    data: {t: movie, apikey: ${{secrets.OKEY}}},
+                    data: {t: movie, apikey: ${{ secrets.OKEY }}},
                     dataType: "json",
                     success: function(result){
                           var posterUrl = result.Poster;
@@ -151,10 +151,10 @@
                           $("#btnWatch").click(function() {  
                                 var url;
                                 if(result.Type === 'movie') {
-                                      url = `./player.html?mi=${result.imdbID}`;
+                                      url = './player.html?mi=${result.imdbID}';
                                       
                                 } else if(result.Type === 'series') {
-                                      url = `./player.html?si=${result.imdbID}&?season=1&?episode=1`;
+                                      url = './player.html?si=${result.imdbID}&?season=1&?episode=1';
                                       
                                 } else {
                                       url = './player.html?si=tt0078748&?season=1&?episode=1';
