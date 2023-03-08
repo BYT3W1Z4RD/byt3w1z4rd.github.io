@@ -38,15 +38,15 @@
             const episode = urlParams.get('episode');
             let playerURL = '';
             if (mi) {
-                  playerURL = ${{secrets.EMBEDPLAYER}} + `/imdb/movie?id=${mi}`;
+                  playerURL = ${{ secrets.EMBEDPLAYER }} + `/imdb/movie?id=${mi}`;
             } else if (mt) {
-                  playerURL = ${{secrets.EMBEDPLAYER}} + `/tmdb/movie?id=${mt}`;
+                  playerURL = ${{ secrets.EMBEDPLAYER }} + `/tmdb/movie?id=${mt}`;
             } else if (si) {
-                  playerURL = ${{secrets.EMBEDPLAYER}} + `/imdb/tv?id=${si}&s=1&e=1`;
+                  playerURL = ${{ secrets.EMBEDPLAYER }} + `/imdb/tv?id=${si}&s=1&e=1`;
             } else if (st) {
-                  playerURL = ${{secrets.EMBEDPLAYER}} + `/tmdb/tv?id=${st}&s=1&e=1`;
+                  playerURL = ${{ secrets.EMBEDPLAYER }} + `/tmdb/tv?id=${st}&s=1&e=1`;
             } else {
-                  playerURL = ${{secrets.EMBEDPLAYER}} + `/imdb/tv?id=tt0903747&s=1&e=1`;
+                  playerURL = ${{ secrets.EMBEDPLAYER }} + `/imdb/tv?id=tt0903747&s=1&e=1`;
             }
             return playerURL;
       }
