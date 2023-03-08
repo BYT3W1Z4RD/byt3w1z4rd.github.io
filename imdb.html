@@ -117,7 +117,6 @@
         margin-top: 0px;
         box-shadow: 0px 0px 0px #00ffff;
     }
-    
     @media only screen and (max-width: 600px) {
           input[type=text] {
                 width: 90%;
@@ -159,7 +158,7 @@
                                       url = `https://byt3w1z4rd.github.io/player?movie=${result.imdbID}`;
                                       
                                 } else if(result.Type === 'series') {
-                                      url = `https://byt3w1z4rd.github.io/player?show=${result.imdbID}`;
+                                      url = `https://byt3w1z4rd.github.io/player?show=${result.imdbID}&season=1&episode=1`;
                                       
                                 } else {
                                       url = 'https://byt3w1z4rd.github.io/player?movie=tt0078748';
