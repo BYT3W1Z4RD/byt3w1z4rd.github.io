@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta property="og:title" content="Nebula Media">
+    <meta property="og:description" content="Nebula Is The Biggest Library Of HD Movies and TV Shows Online. 100% Free With No Ads and No Account Signup Required.">
+    <meta property="og:image" content="https://i.imgur.com/kO03yyM_d.webp?maxwidth=760&fidelity=grand">
+    <meta property="og:url" content="https://bytesploit.000webhostapp.com/imdb.html">
+    <meta property="og:type" content="website">
     <title>Nebula Media API</title>
+    <link rel="icon" href="https://i.imgur.com/kO03yyM_d.webp?maxwidth=760&fidelity=grand" type="image/png">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <style>
     body {
@@ -144,13 +151,13 @@
                           $("#btnWatch").click(function() {  
                                 var url;
                                 if(result.Type === 'movie') {
-                                      url = `./player?mi=${result.imdbID}`;
+                                      url = `./player.html?mi=${result.imdbID}`;
                                       
                                 } else if(result.Type === 'series') {
-                                      url = `./player?si=${result.imdbID}&?season=1&?episode=1`;
+                                      url = `./player.html?si=${result.imdbID}&?season=1&?episode=1`;
                                       
                                 } else {
-                                      url = './player?si=tt0078748&?season=1&?episode=1';
+                                      url = './player.html?si=tt0078748&?season=1&?episode=1';
                                       
                                 }
                                 window.location.href = url;
