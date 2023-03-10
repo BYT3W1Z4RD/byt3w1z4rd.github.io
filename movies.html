@@ -218,6 +218,13 @@ button[type="button"]:hover {
     <div id="results"></div>
     <script>
     window.addEventListener("load", searchMovies);
+    searchInput.addEventListener("keyup", function (event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        searchMovies();
+      }
+    });
+
     const apiKeyTmdb = "0ae47aadd2d85a324c238972cedab662";
     const apiKeyOmdb = "67614538";
     const apiUrlTmdb = `https://api.themoviedb.org/3/search/movie?api_key=${apiKeyTmdb}&query=`;
