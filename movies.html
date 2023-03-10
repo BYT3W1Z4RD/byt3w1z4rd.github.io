@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Nebula Media</title>
+	<style>
+		#sidebar {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 14%;
+			height: 100%;
+			background-color: #292929;
+			color: #fff;
+			transform: translateX(-250px);
+			transition: transform 0.3s ease-in-out;
+			padding: 20px;
+			box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+			z-index: 1;
+		}
+		#sidebar.show {
+			transform: translateX(0);
+		}
+		#sidebar h2 {
+			font-size: 1.5rem;
+			margin-top: 0;
+			margin-bottom: 10px;
+			padding-bottom: 10px;
+			border-bottom: 1px solid #444;
+		}
+		#sidebar ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+		#sidebar li {
+			margin: 0px 0;
+		}
+		#sidebar a {
+			display: block;
+			padding: 5px;
+			border-radius: 5px;
+			text-decoration: none;
+			color: #fff;
+			transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+		}
+		#sidebar a:hover {
+			background-color: #fff;
+			color: #333;
+		}
+		#content {
+			margin-left: 0px;
+			padding: 15px;
+		}
+		#content h1 {
+			font-size: 2.5rem;
+			margin-top: 0;
+			margin-bottom: 20px;
+		}
+		#content p {
+			font-size: 1.25rem;
+			line-height: 1.5;
+			margin-bottom: 20px;
+		}
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #2f2f2f;
+  color: #ffffff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+}
+
+h1 {
+  margin-top: 20px;
+  margin-bottom: 40px;
+  text-align: center;
+  text-shadow: 0px 0px 10px #000000;
+}
+
+/* Form styles */
+form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  font-size: 16px;
+  background-color: #2d2d2d;
+  border: none;
+  color: #ffffff;
+  border-radius: 20px;
+  width: 30%;
+  position: absolute;
+  center: 0px;
+}
+
+button[type="button"] {
+    margin : 10px;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #0078d4;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  display: block;
+}
+
+button[id="searchMovie"] {
+  position: absolute;
+  right: 442px;
+}
+
+button[type="button"]:hover {
+  background-color: #005a9e;
+}
+
+/* Sort Select Styles */
+#sort-select {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  text-align: center;
+  position: absolute;
+  right: 30px;
+}
+
+#sort-select option {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+}
+
+#sort-select option:hover {
+  background-color: #444;
+}
+
+#sort-select option:checked {
+  background-color: #555;
+}
+
+/* Results styles */
+#results {
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+  margin-top: 30px;
+}
+
+.movie {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  background-color: #2d2d2d;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.movie:hover {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 1);
+}
+
+.movie img {
+  width: 200px;
+  height: 300px;
+  margin-right: 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.movie-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px;
+  color: #ffffff;
+}
+
+.movie-info h3 {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.movie-info p {
+  margin: 5px;
+  font-size: 16px;
+}
+
+.watch-now {
+  margin: 10px;
+}
+
+.watch-now button {
+  margin : 10px;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #0078d4;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  display: block;
+}
+
+.watch-now button:hover {
+  background-color: #005a9e;
+}
+
+.movie-details {
+  margin-top: 10px;
+}
+
+.movie-details h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.movie-details p {
+  margin: 5px;
+  font-size: 16px;
+}
+
+.movie-details .details {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.movie-details .details p {
+  margin-right: 20px;
+}
+
+.movie-details .watch-now {
+  margin-top: 20px;
+}
+    </style>
+  </head>
+  <body>
+	<div id="sidebar">
+		<h2>Nebula Media</h2>
+		<ul>
+			<li><a href="#" onclick="showDesign('movies')">Movies</a></li>
+			<li><a href="#" onclick="showDesign('shows')">Shows</a></li>
+		</ul>
+	</div>
+	<script>
+    var sidebar = document.getElementById("sidebar");
+    sidebar.addEventListener("mouseenter", function() {
+        sidebar.classList.add("show");
+    });
+    sidebar.addEventListener("mouseleave", function() {
+        sidebar.classList.remove("show");
+    });
+
+    var moviesLink = document.querySelector("#sidebar ul li:nth-of-type(1) a");
+    var showsLink = document.querySelector("#sidebar ul li:nth-of-type(2) a");
+
+    moviesLink.addEventListener("click", function() {
+        window.location.href = "movies.html";
+    });
+
+    showsLink.addEventListener("click", function() {
+        window.location.href = "shows.html";
+    });
+</script>
+</body>
+  <body>
+    <h1>Nebula Media</h1>
+    <form onsubmit="searchMovies(); return false;">
+        <select id="sort-select">
+        <option value="">Sort By:</option>
+        <option value="title-asc">a-Z</option>
+        <option value="title-desc">Z-a</option>
+        <option value="release-date-desc">Newest-Oldest</option>
+        <option value="release-date-asc">Oldest-Newest</option>
+        </select>
+      <input type="text" id="movie" name="movie">
+      <button type="button" id="searchMovie" onclick="searchMovies()">Search</button>
+    </form>
+    <div id="results"></div>
+    <script>
+    window.addEventListener("load", searchMovies);
+    const apiKeyTmdb = "0ae47aadd2d85a324c238972cedab662";
+    const apiKeyOmdb = "67614538";
+    const apiUrlTmdb = `https://api.themoviedb.org/3/search/movie?api_key=${apiKeyTmdb}&query=`;
+    const apiUrlOmdb = `https://www.omdbapi.com/?apikey=${apiKeyOmdb}&plot=full&t=`;
+    const searchInput = document.querySelector("#movie");
+    const moviesContainer = document.querySelector("#results");
+    
+    const sortSelect = document.querySelector("#sort-select");
+    sortSelect.addEventListener("change", () => {
+        sortMovies(sortSelect.value);
+        
+    });
+    
+    function sortMovies(sortOption) {
+  const movies = Array.from(moviesContainer.children);
+  switch (sortOption) {
+    case "title-asc":
+      movies.sort((a, b) => a.querySelector("h3").textContent.localeCompare(b.querySelector("h3").textContent));
+      break;
+    case "title-desc":
+      movies.sort((a, b) => b.querySelector("h3").textContent.localeCompare(a.querySelector("h3").textContent));
+      break;
+    case "release-date-asc":
+      movies.sort((a, b) => a.querySelector("p:nth-child(2)").textContent.localeCompare(b.querySelector("p:nth-child(2)").textContent));
+      break;
+    case "release-date-desc":
+      movies.sort((a, b) => b.querySelector("p:nth-child(2)").textContent.localeCompare(a.querySelector("p:nth-child(2)").textContent));
+      break;
+    default:
+      // do nothing if the default option is selected
+      return;
+  }
+  movies.forEach((movie) => moviesContainer.appendChild(movie));
+}
+
+    
+    async function searchMovies() {
+  const searchTerm = searchInput.value;
+  if (searchTerm) {
+    try {
+      const response = await fetch(apiUrlTmdb + searchTerm);
+      const data = await response.json();
+      const movies = data.results;
+      showMovies(movies);
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    // fetch movies currently playing in theaters
+    try {
+      const nowPlayingUrl = `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKeyTmdb}&language=en-US&page=1`;
+      const response = await fetch(nowPlayingUrl);
+      const data = await response.json();
+      const movies = data.results;
+      showMovies(movies);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
+
+    function showMovies(movies) {
+        moviesContainer.innerHTML = "";
+        movies.forEach((movie) => {
+            const { id, title, release_date, poster_path, vote_average } = movie;
+            const movieElement = document.createElement("div");
+            movieElement.classList.add("movie");
+            movieElement.innerHTML = `
+            <img src="https://image.tmdb.org/t/p/w500/${poster_path}" alt="${title}">
+            <div class="movie-info">
+            <h3>${title}</h3>
+            <p><span>Year: </span>${release_date ? release_date.split("-")[0] : "Unknown"}</p>
+            <p>${vote_average}/10<span>★
+            <div class="watch-now">
+            <button onclick="showDetails(event, '${title}')">Details</button>
+            </div>
+            </div>
+            `;
+            moviesContainer.appendChild(movieElement);
+            
+        });
+        
+    }
+
+    async function showDetails(event, title) {
+        event.stopPropagation();
+        const response = await fetch(apiUrlOmdb + encodeURIComponent(title)); // encode title to handle special characters
+        const data = await response.json();
+        const { Plot, imdbRating, Rated, Year, Runtime, Genre, Director, Writer, Actors, Awards, imdbID } = data;
+        const movieDetails = document.createElement("div");
+        movieDetails.classList.add("movie-details");
+        movieDetails.innerHTML = `
+        <div class="details">
+        <p><span>Age Rating: </span>${Rated}</p>
+        <p><span>Runtime: </span>${Runtime}</p>
+        <p><span>Genre: </span>${Genre}</p>
+        <p><span>Director: </span>${Director}</p>
+        <p><span>Writers: </span>${Writer}</p>
+        <p><span>Actors: </span>${Actors}</p>
+        <p><span>Awards: </span>${Awards}</p>
+        <p><span>Plot: </span>${Plot}</p>
+        <div class="watch-now">
+        <button id="btnWatch" onclick="window.location.href = 'player.html?mi=${imdbID}'">Watch Now</button>
+        </div>
+        `;
+        event.target.parentNode.appendChild(movieDetails);
+        event.target.parentNode.removeChild(event.target);
+    }
+</script>
+</body>
+</html>
