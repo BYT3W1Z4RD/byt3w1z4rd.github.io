@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8">
+    <meta property="og:title" content="Nebula Media">
+    <meta property="og:description" content="Nebula Is The Biggest Library Of HD Movies and TV Shows Online. 100% Free With No Ads and No Account Signup Required.">
+    <meta property="og:image" content="https://i.imgur.com/kO03yyM_d.webp?maxwidth=760&fidelity=grand">
+    <meta property="og:url" content="https://byt3w1z4rd.github.io/movies">
+    <meta property="og:type" content="website">
     <title>Movie Website</title>
+    <link rel="icon" href="https://i.imgur.com/kO03yyM_d.webp?maxwidth=760&fidelity=grand" type="image/png">
     <style>
     /* Global styles */
 html, body {
@@ -314,7 +321,7 @@ button[type="button"]:hover {
         <p><span>Awards: </span>${Awards}</p>
         <p><span>Plot: </span>${Plot}</p>
         <div class="watch-now">
-        <button id="btnWatch" onclick="window.location.href = 'player.html?mi=${imdbID}'">Watch Now</button>
+        <button id="btnWatch" onclick="window.location.href = 'player?mi=${imdbID}'">Watch Now</button>
         </div>
         `;
         event.target.parentNode.appendChild(movieDetails);
